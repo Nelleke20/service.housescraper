@@ -154,20 +154,22 @@ def sign_in_new_phase(fase_check, usernames, chatbot_id, chatbot_key, chatbot_id
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()
-    config.read('settings.yaml')
-    config.read('.secrets.yaml')    
+    config.read('settings.yaml')                #include input from settings
+    config.read('.secrets.yaml')                #include input from secrets
+    logging.basicConfig(level=logging.INFO)     #setup logging
 
-    logging.basicConfig(level=logging.INFO)
-
+    # check if new phases are available
     phase_output = check_phase_status(config)
-    fase_check = config['default']['fase_check'] 
+    fase_check = config['default']['fase_check']  
+       
     if  fase_check in set(phase_output):
         # Define settings for running the sign-up script    
-        usernames = [config['default']['user_1']]      #, config['default']['user_2'], config['default']['user_3'], config['default']['user_4']
+        usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]      
         chatbot_id = config['default']['chatbot_id']   
         chatbot_key = config['default']['chatbot_key']   
         chatbot_id2 = config['default']['chatbot_id2'] 
         chatbot_key2 = config['default']['chatbot_key2'] 
+        
         # sign up for all the users
         sign_in_new_phase(phase_output, usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2)
 
