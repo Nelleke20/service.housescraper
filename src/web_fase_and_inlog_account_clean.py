@@ -28,11 +28,6 @@ def check_phase_status(config):
     for i in fase_2:
         output.append(re.findall(r"\>(.*)\<", str(i), flags=0))
     output_flat = [item for sublist in output for item in sublist]
-
-    output = []
-    for i in fase_2:
-        output.append(re.findall(r"\>(.*)\<", str(i), flags=0))
-    output_flat = [item for sublist in output for item in sublist]
     logging.info('The following phases are in the outputset: {}'.format(output_flat))
     browser.quit()
     return output_flat
