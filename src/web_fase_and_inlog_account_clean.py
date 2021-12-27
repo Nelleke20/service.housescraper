@@ -37,7 +37,7 @@ def check_phase_status(config):
     browser.quit()
     return output_flat
 
-def sign_in_new_phase(fase_check, usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2):
+def sign_in_new_phase(config, fase_check, usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2):
     logging.info('The following users are in the userset: {}'.format(usernames))
     logging.info('The following fase is being checked: {}'.format(fase_check))
     logging.info('Running the applicationform script..')
@@ -168,5 +168,5 @@ if __name__ == "__main__":
         chatbot_key2 = config['default']['chatbot_key2'] 
         
         # sign up for all the users
-        sign_in_new_phase(phase_output, usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2)
+        sign_in_new_phase(config, phase_output, usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2)
 
