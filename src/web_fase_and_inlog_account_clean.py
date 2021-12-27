@@ -129,8 +129,6 @@ def sign_in_new_phase(fase_check, usernames, chatbot_id, chatbot_key, chatbot_id
                 screenshot_name = "./screenshot/{}_screenshot_signup{}.png".format(user,housenumber)
                 browser2.save_screenshot(screenshot_name)
                 time.sleep(5)
-
-                # time.sleep(5)
                 requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id, chatbot_key, config[user]['telegram_id'], 'Answers part one and two are sent.'))                    
 
                 #send  application form
@@ -149,7 +147,6 @@ def sign_in_new_phase(fase_check, usernames, chatbot_id, chatbot_key, chatbot_id
 
         #send output to my telegram bot
         requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2, chatbot_key2, config['nelleke']['telegram_id'], resulttext))                    
-                 
     browser2.quit()
 
 if __name__ == "__main__":
