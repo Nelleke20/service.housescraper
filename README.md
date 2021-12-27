@@ -14,3 +14,6 @@ Scrape the website of a house project via a cron-job
         streetname: [streetname]  
         place: [place]  
         telegram_id: [telegram_id]
+
+# to do:
+1. fix python code in functions
