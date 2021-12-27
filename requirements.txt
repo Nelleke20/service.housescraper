@@ -1,5 +1,4 @@
 Adafruit-DHT==1.4.0
-arandr==0.1.10
 astroid==2.5.1
 asttokens==2.0.4
 automationhat==0.2.0
@@ -15,7 +14,6 @@ click==7.1.2
 colorama==0.4.4
 colorzero==1.1
 cryptography==3.3.2
-cupshelpers==1.0
 dbus-python==1.2.16
 distro==1.5.0
 dnspython==2.0.0
@@ -25,7 +23,6 @@ envirophat==1.0.0
 ExplorerHAT==0.4.2
 Flask==1.1.2
 fourletterphat==0.1.0
-gpg===1.14.0-unknown
 gpiozero==1.6.2
 html5lib==1.1
 idna==2.10
@@ -33,7 +30,6 @@ isort==5.6.4
 itsdangerous==1.1.0
 jedi==0.18.0
 Jinja2==2.11.3
-lazy-object-proxy==0.0.0
 logilab-common==1.8.1
 lxml==4.6.3
 Markdown==3.3.4
@@ -60,7 +56,6 @@ Pillow==8.1.2
 psutil==5.8.0
 pycairo==1.16.2
 pycups==2.0.1
-pygame==1.9.6
 Pygments==2.7.1
 PyGObject==3.38.0
 pyinotify==0.9.6
@@ -68,8 +63,6 @@ PyJWT==1.7.1
 pylint==2.7.2
 pyOpenSSL==20.0.1
 pyserial==3.5b0
-pysmbc==1.0.23
-python-apt==2.2.1
 PyYAML==5.3.1
 rainbowhat==0.1.0
 regex==2021.11.10
