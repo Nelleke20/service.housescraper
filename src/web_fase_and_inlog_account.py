@@ -43,7 +43,7 @@ def web_scraping_fase_and_inlog():
 
     # Define settings for running the rest of the sign-up script
     fase_check = config['default']['fase_check']     
-    usernames = [config['default']['user_1']]      #, config['default']['user_2'], config['default']['user_3'], config['default']['user_4']
+    usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]      
     chatbot_id = config['default']['chatbot_id']   
     chatbot_key = config['default']['chatbot_key']   
     chatbot_id2 = config['default']['chatbot_id2'] 
