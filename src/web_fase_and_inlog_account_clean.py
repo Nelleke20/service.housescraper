@@ -134,15 +134,9 @@ def sign_in_new_phase(config, fase_check, usernames, chatbot_id, chatbot_key, ch
                 requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id, chatbot_key, config[user]['telegram_id'], 'The total applicationform is sent.'))                    
                 screenshot_confirmation = "./screenshot/{}_screenshot_confirmation{}.png".format(user,housenumber)
                 browser2.save_screenshot(screenshot_confirmation)
-                time.sleep(5)            
-
-    else:
-        resulttext = []
-        resulttext.append([set(phase_output), 'is only available in the set.'])
-
-        #send output to my telegram bot
-        requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2, chatbot_key2, config['nelleke']['telegram_id'], resulttext))                    
-    browser2.quit()
+                time.sleep(5)    
+                browser2.quit()
+  
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()
@@ -152,16 +146,22 @@ if __name__ == "__main__":
 
     # check if new phases are available
     phase_output = check_phase_status(config)
-    fase_check = config['default']['fase_check']  
-       
+    fase_check = config['default']['fase_check']                                        
+
+    # Define settings for running the sign-up script    
+    usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]       
+    chatbot_id = config['default']['chatbot_id']   
+    chatbot_key = config['default']['chatbot_key']   
+    chatbot_id2 = config['default']['chatbot_id2'] 
+    chatbot_key2 = config['default']['chatbot_key2']  
+          
     if  fase_check in set(phase_output):
-        # Define settings for running the sign-up script    
-        usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]      
-        chatbot_id = config['default']['chatbot_id']   
-        chatbot_key = config['default']['chatbot_key']   
-        chatbot_id2 = config['default']['chatbot_id2'] 
-        chatbot_key2 = config['default']['chatbot_key2'] 
-        
         # sign up for all the users
         sign_in_new_phase(config, phase_output, usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2)
 
+    else:
+        #send message to telegram bot
+        resulttext = []
+        resulttext.append([set(phase_output), 'is only available in the set.'])
+        requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2, chatbot_key2, config['nelleke']['telegram_id'], resulttext))                    
+  
