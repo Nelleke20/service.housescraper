@@ -16,4 +16,5 @@ Scrape the website of a house project via a cron-job
         telegram_id: [telegram_id]
 
 # to do:
-1. fix python code in functions
+1. fix flake8
+2. check scrapy
