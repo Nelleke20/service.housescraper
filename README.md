@@ -18,3 +18,4 @@ Scrape the website of a house project via a cron-job
 # to do:
 1. fix flake8
 2. check scrapy
+3. cleanup code variables, empyt lists, packages etc.
