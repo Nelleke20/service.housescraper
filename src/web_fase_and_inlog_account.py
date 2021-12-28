@@ -37,7 +37,7 @@ def sign_in_new_phase(config, phase_output, housenumbers, chatbot_id, chatbot_ke
     #send output to telegram bot
     resulttext = []
     resulttext.append(set(phase_output))
-    resulttext.append('is also available in the totalset, check it out online! You will now be signed in.')
+    resulttext.append('is also available in the totalset, check it out online. If not done yet, you will now be signed in.')
     requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id, chatbot_key, config[user]['telegram_id'], resulttext))
 
     #running script per new housenumber      
@@ -57,55 +57,47 @@ def sign_in_new_phase(config, phase_output, housenumbers, chatbot_id, chatbot_ke
             requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id, chatbot_key, config[user]['telegram_id'], output_combinatie))
 
             #options for the chromedriver
-            chrome_options2 = Options()
-            chrome_options2.add_argument("--window-size=1920,1080")
-            chrome_options2.add_argument("--disable-extensions")
-            chrome_options2.add_argument("--proxy-server='direct://'")
-            chrome_options2.add_argument("--proxy-bypass-list=*")
-            chrome_options2.add_argument("--start-maximized")
-            chrome_options2.add_argument('--headless')
-            chrome_options2.add_argument('--disable-gpu')
-            chrome_options2.add_argument('--disable-dev-shm-usage')
-            chrome_options2.add_argument('--no-sandbox')
-            chrome_options2.add_argument('--ignore-certificate-errors')
-            url2 = "https://www.nieuwbouwinhouten.nl/woningen//tussenwoning-herenhuis-woningtype-a077R00001JFZFIQA5/bouwnummer-{}".format(housenumber)                 
-            browser2 = webdriver.Chrome(chrome_options=chrome_options2)            
-            browser2.get(url2)
-            browser2.implicitly_wait(10)
+            chrome_options = Options()
+            chrome_options.add_argument("--window-size=1920,1080")
+            chrome_options.add_argument("--disable-extensions")
+            chrome_options.add_argument("--proxy-server='direct://'")
+            chrome_options.add_argument("--proxy-bypass-list=*")
+            chrome_options.add_argument("--start-maximized")
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--disable-dev-shm-usage')
+            chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument('--ignore-certificate-errors')
+            url = "https://www.nieuwbouwinhouten.nl/woningen//tussenwoning-herenhuis-woningtype-a077R00001JFZFIQA5/bouwnummer-{}".format(housenumber)                 
+            browser = webdriver.Chrome(chrome_options=chrome_options)            
+            browser.get(url)
+            browser.implicitly_wait(10)
 
             #accept cookies
-            python_button1 = browser2.find_element_by_xpath('/html/body/bpd-cookies/div/div/div/div/button')
+            python_button1 = browser.find_element_by_xpath('/html/body/bpd-cookies/div/div/div/div/button')
             logging.info('Button 1 is clicked - accepting cookies on the website for the combination {}, {}.'.format(user, housenumber))
             python_button1.click()
     
             #click on projectfase button
-            action = ActionChains(browser2)
-            browser2.execute_script("window.scrollTo(0, 750)") 
+            action = ActionChains(browser)
+            browser.execute_script("window.scrollTo(0, 750)") 
             time.sleep(3)
-            python_button2 = browser2.find_element_by_xpath("/html/body/main/section[1]/div/div/div[1]/div[2]/div[1]/button")
+            python_button2 = browser.find_element_by_xpath("/html/body/main/section[1]/div/div/div[1]/div[2]/div[1]/button")
             logging.info('Button 2 is clicked - click on the sign-up button for the combination {}, {}.'.format(user, housenumber))
             action.move_to_element(python_button2).click().perform()
 
             #select and send keys from the  application form - first step
-            username = browser2.find_element_by_id("lead-form-firstname").send_keys(config[user]["username"])
-            lastname = browser2.find_element_by_id("lead-form-lastname")
-            emailadres = browser2.find_element_by_id("lead-form-email")
-            phone = browser2.find_element_by_id("lead-form-phone")
-            postalcode = browser2.find_element_by_id("lead-form-postalcode")
-            housnr = browser2.find_element_by_id("lead-form-housenumber")
-
-            #send keys form the application form - first step
-            username.
-            lastname.send_keys(config[user]["lastname"])
-            emailadres.send_keys(config[user]["emailadres"])
-            phone.send_keys(config[user]["phone"])
-            postalcode.send_keys(config[user]["postalcode"])
-            housnr.send_keys(config[user]["housnr"])
+            browser.find_element_by_id("lead-form-firstname").send_keys(config[user]["username"])
+            browser.find_element_by_id("lead-form-lastname").send_keys(config[user]["lastname"])
+            browser.find_element_by_id("lead-form-email").send_keys(config[user]["emailadres"])
+            browser.find_element_by_id("lead-form-phone").send_keys(config[user]["phone"])
+            browser.find_element_by_id("lead-form-postalcode").send_keys(config[user]["postalcode"])
+            browser.find_element_by_id("lead-form-housenumber").send_keys(config[user]["housnr"])
             time.sleep(5)
 
             #select keys from the  application form - second step
-            streetname = browser2.find_element_by_id("lead-form-streetname")
-            place = browser2.find_element_by_id("lead-form-place")
+            streetname = browser.find_element_by_id("lead-form-streetname")
+            place = browser.find_element_by_id("lead-form-place")
 
             #send keys form the application form - second 
             time.sleep(3)
@@ -113,20 +105,19 @@ def sign_in_new_phase(config, phase_output, housenumbers, chatbot_id, chatbot_ke
             streetname.send_keys(config[user]["streetname"])
             place.send_keys(config[user]["place"])
             screenshot_name = "./screenshot/{}_screenshot_signup{}.png".format(user,housenumber)
-            browser2.save_screenshot(screenshot_name)
+            browser.save_screenshot(screenshot_name)
             time.sleep(5)
             requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id, chatbot_key, config[user]['telegram_id'], 'Answers part one and two are sent.'))                    
 
             #send  application form
-            python_button3 = browser2.find_element_by_xpath("/html/body/lead-form/bpd-modal/div/div/bpd-pages/div[1]/bpd-form/form/div[1]/div[14]/button")
+            python_button3 = browser.find_element_by_xpath("/html/body/lead-form/bpd-modal/div/div/bpd-pages/div[1]/bpd-form/form/div[1]/div[14]/button")
             logging.info('Button 3 is clicked - sending the applicationform for the combination {}, {}.'.format(user, housenumber))
             action.move_to_element(python_button3).click().perform()
             time.sleep(5)
             requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id, chatbot_key, config[user]['telegram_id'], 'The total applicationform is sent.'))                    
             screenshot_confirmation = "./screenshot/{}_screenshot_confirmation{}.png".format(user,housenumber)
-            browser2.save_screenshot(screenshot_confirmation)
-            # time.sleep(5)    
-            browser2.quit()
+            browser.save_screenshot(screenshot_confirmation)
+            browser.quit()
   
 
 if __name__ == "__main__":
@@ -144,7 +135,7 @@ if __name__ == "__main__":
     chatbot_key = config['default']['chatbot_key']   
     chatbot_id2 = config['default']['chatbot_id2'] 
     chatbot_key2 = config['default']['chatbot_key2']  
-    phase_check = config['default']['fase_check']
+    phase_check = config['default']['fase_check']              
 
     # if new phase is availble sign-up for each user for different housenumbers
     if  phase_check in set(phase_output):
