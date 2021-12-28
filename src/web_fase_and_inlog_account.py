@@ -22,8 +22,6 @@ def check_phase_status(config):
     html = browser.page_source
     woning_soup = bs4.BeautifulSoup(html, 'lxml')
     fase_2 = woning_soup.find_all('span',attrs={'class':'property-card__project'})
-    
-    ResultText = []
     output = []
     for i in fase_2:
         output.append(re.findall(r"\>(.*)\<", str(i), flags=0))
@@ -88,8 +86,8 @@ def sign_in_new_phase(config, phase_output, housenumbers, chatbot_id, chatbot_ke
             logging.info('Button 2 is clicked - click on the sign-up button for the combination {}, {}.'.format(user, housenumber))
             action.move_to_element(python_button2).click().perform()
 
-            #select keys from the  application form - first step
-            username = browser2.find_element_by_id("lead-form-firstname")
+            #select and send keys from the  application form - first step
+            username = browser2.find_element_by_id("lead-form-firstname").send_keys(config[user]["username"])
             lastname = browser2.find_element_by_id("lead-form-lastname")
             emailadres = browser2.find_element_by_id("lead-form-email")
             phone = browser2.find_element_by_id("lead-form-phone")
@@ -97,7 +95,7 @@ def sign_in_new_phase(config, phase_output, housenumbers, chatbot_id, chatbot_ke
             housnr = browser2.find_element_by_id("lead-form-housenumber")
 
             #send keys form the application form - first step
-            username.send_keys(config[user]["username"])
+            username.
             lastname.send_keys(config[user]["lastname"])
             emailadres.send_keys(config[user]["emailadres"])
             phone.send_keys(config[user]["phone"])
