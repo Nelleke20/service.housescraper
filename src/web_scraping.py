@@ -46,25 +46,27 @@ def web_scraping_hofpark():
             resulttext.append(url)
             if user == 'nelleke':
                 requests.get("https://api.telegram.org/{}:{}/sendMessage"
-                             "?chat_id={}&text={}".format(chatbot_id2,
-                                                          chatbot_key2,
-                                                          config['nelleke']['telegram_id'],
-                                                          resulttext))
+                             "?chat_id={}&"
+                             "text={}".format(chatbot_id2,
+                                              chatbot_key2,
+                                              config['nelleke']['telegram_id'],
+                                              resulttext))
 
         else:
             uitkomst_false = 'Yes, er is nieuws!'
             ' Check the website voor het nieuws.'
-
             artikel_false = 'Het laatste artikel bevat'
             ' de volgende tekst: {}'.format(last_article)
+
             resulttext.append(uitkomst_false)
             resulttext.append(artikel_false)
             resulttext.append(url)
             requests.get("https://api.telegram.org/{}:{}/sendMessage"
-                         "?chat_id={}&text={}".format(chatbot_id,
-                                                      chatbot_key,
-                                                      config[user]['telegram_id'],
-                                                      resulttext))
+                         "?chat_id={}&"
+                         "text={}".format(chatbot_id,
+                                          chatbot_key,
+                                          config[user]['telegram_id'],
+                                          resulttext))
 
 
 if __name__ == "__main__":
