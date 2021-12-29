@@ -12,7 +12,6 @@ import configparser
 
 
 def check_phase_status(config):
-    # check is phase 2 is available by selecting all phases
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     url = config['default']['url_1']
@@ -24,7 +23,7 @@ def check_phase_status(config):
                                   'class': 'property-card__project'})
     output = []
     [output.append(re.findall(r"\>(.*)\<", str(i), flags=0)) for i in fase_2]
-    output_flat = [item for sublist in output for item in sublist]
+    output_flat = [item for sublist in output for item in sublist]                          # check all phases on the web           # noqa: E501
     logging.info('The following phases are in the outputset: {}'.format(output_flat))                                               # noqa: E501
     browser.quit()
     return output_flat
