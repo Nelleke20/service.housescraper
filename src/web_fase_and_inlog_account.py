@@ -157,7 +157,10 @@ if __name__ == "__main__":
     phase_output = check_phase_status(config)
 
     # Define settings for running the sign-up script
-    usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]    # noqa: E501
+    usernames = [config['default']['user_1'],
+                 config['default']['user_2'],
+                 config['default']['user_3'],
+                 config['default']['user_4']]    # noqa: E501
     chatbot_id = config['default']['chatbot_id']
     chatbot_key = config['default']['chatbot_key']
     chatbot_id2 = config['default']['chatbot_id2']
