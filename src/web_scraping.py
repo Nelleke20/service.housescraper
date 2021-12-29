@@ -38,35 +38,26 @@ def web_scraping_hofpark():
         # check if new article exists and return, else return old article
         if last_article == old_article:
             uitkomst_true = 'Helaas er is (nog) geen update op de website....'
-            artikel_true = 'Het laatste artikel bevat'
-            ' de volgende tekst: {}'.format(last_article)
-
+            artikel_true = 'Het laatste artikel bevat de volgende tekst: {}'.format(last_article)                                       # noqa: E501
             resulttext.append(uitkomst_true)
             resulttext.append(artikel_true)
             resulttext.append(url)
             if user == 'nelleke':
-                requests.get("https://api.telegram.org/{}:{}/sendMessage"
-                             "?chat_id={}&"
-                             "text={}".format(chatbot_id2,
-                                              chatbot_key2,
-                                              config['nelleke']['telegram_id'],
-                                              resulttext))
+                requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2,                        # noqa: E501
+                                                                                                    chatbot_key2,                       # noqa: E501
+                                                                                                    config['nelleke']['telegram_id'],   # noqa: E501
+                                                                                                    resulttext))                        # noqa: E501
 
         else:
-            uitkomst_false = 'Yes, er is nieuws!'
-            ' Check the website voor het nieuws.'
-            artikel_false = 'Het laatste artikel bevat'
-            ' de volgende tekst: {}'.format(last_article)
-
+            uitkomst_false = 'Yes, er is nieuws! Check the website voor het nieuws.'                                                    # noqa: E501
+            artikel_false = 'Het laatste artikel bevat de volgende tekst: {}'.format(last_article)                                      # noqa: E501
             resulttext.append(uitkomst_false)
             resulttext.append(artikel_false)
             resulttext.append(url)
-            requests.get("https://api.telegram.org/{}:{}/sendMessage"
-                         "?chat_id={}&"
-                         "text={}".format(chatbot_id,
-                                          chatbot_key,
-                                          config[user]['telegram_id'],
-                                          resulttext))
+            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                             # noqa: E501
+                                                                                                chatbot_key,                            # noqa: E501
+                                                                                                config[user]['telegram_id'],            # noqa: E501
+                                                                                                resulttext))                            # noqa: E501
 
 
 if __name__ == "__main__":
