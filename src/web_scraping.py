@@ -37,6 +37,8 @@ def web_scraping_hofpark():
 
         # check if new article exists and return, else return old article
         if last_article == old_article:
+            
+            # if so, sent message with no new information
             uitkomst_true = 'Helaas er is (nog) geen update op de website....'
             artikel_true = 'Het laatste artikel bevat de volgende tekst: {}'.format(last_article)                                       # noqa: E501
             resulttext.append(uitkomst_true)
@@ -49,6 +51,7 @@ def web_scraping_hofpark():
                                                                                                     resulttext))                        # noqa: E501
 
         else:
+            # if not, sent message with new information
             uitkomst_false = 'Yes, er is nieuws! Check the website voor het nieuws.'                                                    # noqa: E501
             artikel_false = 'Het laatste artikel bevat de volgende tekst: {}'.format(last_article)                                      # noqa: E501
             resulttext.append(uitkomst_false)
