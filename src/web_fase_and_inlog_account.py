@@ -29,9 +29,8 @@ def check_phase_status(config):
     return output_flat
 
 
-def sign_in_new_phase(config, phase_output,
-                      housenumbers, chatbot_id,
-                      chatbot_key):
+def sign_in_new_phase(config, phase_output, housenumbers,
+                      chatbot_id, chatbot_key):
     logging.info('The following users are in the userset: {}'.format(usernames))                                                    # noqa: E501
     logging.info('Running the applicationform sign-up script..')
 
