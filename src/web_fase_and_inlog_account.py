@@ -21,10 +21,9 @@ def check_phase_status(config):
     html = browser.page_source
     woning_soup = BeautifulSoup(html, 'lxml')
     fase_2 = woning_soup.find_all('span', attrs={
-                                        'class': 'property-card__project'})
+                                  'class': 'property-card__project'})
     output = []
-    for i in fase_2:
-        output.append(re.findall(r"\>(.*)\<", str(i), flags=0))
+    [output.append(re.findall(r"\>(.*)\<", str(i), flags=0)) for i in fase_2]
     output_flat = [item for sublist in output for item in sublist]
     logging.info('The following phases are in the outputset: {}'.format(output_flat))                                               # noqa: E501
     browser.quit()
@@ -52,11 +51,11 @@ def sign_in_new_phase(config, phase_output,
         # check if already signed in
         screenshot_name = "./screenshot/{}_screenshot_signup{}.png".format(user, housenumber)                                       # noqa: E501
         screenshot_confirmation = Path(screenshot_name)
+        # if so, do not sign in to webpage
         if screenshot_confirmation.is_file():
             logging.info('For the combination of {} and {}, a file already exists, so will skip this run.'.format(user,             # noqa: E501
                                                                                                                   housenumber))     # noqa: E501
             continue
-
         # if not, sign in to webpage
         else:
             # send starting info to telegram
@@ -66,7 +65,6 @@ def sign_in_new_phase(config, phase_output,
                                                                                                 chatbot_key,                        # noqa: E501
                                                                                                 config[user]['telegram_id'],        # noqa: E501
                                                                                                 output_combinatie))                 # noqa: E501
-
             # options for the chromedriver
             chrome_options = Options()
             chrome_options.add_argument("--window-size=1920,1080")
@@ -170,12 +168,13 @@ if __name__ == "__main__":
 
     # if new phase is availble sign-up for each user for different housenumbers
     if phase_check in set(phase_output):
+        # if so, sign in to new phase
         for user in usernames:
             housenumbers = [config[user]["housenumber1"], config[user]["housenumber2"]]                                             # noqa: E501
             sign_in_new_phase(config, phase_output, housenumbers,
                               chatbot_id, chatbot_key)
     else:
-        # send message to telegram bot
+        # if not, send message to telegram bot
         resulttext = []
         resulttext.append([set(phase_output), 'is only available in the set.'])
         requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2,                            # noqa: E501
