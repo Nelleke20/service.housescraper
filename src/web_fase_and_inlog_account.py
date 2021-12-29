@@ -161,17 +161,17 @@ if __name__ == "__main__":
     phase_output = check_phase_status(config)
 
     # Define settings for running the sign-up script
-    usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]                 
+    usernames = [config['default']['user_1'], config['default']['user_2'], config['default']['user_3'], config['default']['user_4']]    # noqa: E501
     chatbot_id = config['default']['chatbot_id']
     chatbot_key = config['default']['chatbot_key']
     chatbot_id2 = config['default']['chatbot_id2']
     chatbot_key2 = config['default']['chatbot_key2']
-    phase_check = config['default']['fase_check']          
+    phase_check = config['default']['fase_check']
 
     # if new phase is availble sign-up for each user for different housenumbers
     if phase_check in set(phase_output):
         for user in usernames:
-            housenumbers = [config[user]["housenumber1"], config[user]["housenumber2"]]                 # noqa: E501
+            housenumbers = [config[user]["housenumber1"], config[user]["housenumber2"]]                                             # noqa: E501
             sign_in_new_phase(config, phase_output, housenumbers,
                               chatbot_id, chatbot_key)
     else:
