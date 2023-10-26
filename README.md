@@ -4,6 +4,7 @@ For this project I used my Raspberry Pi and created a couple of cronjobs to cons
 
 
 #### Design / setup of the project:
+
 <p align="center" width="100%">
     <img width="75%" src="img/setup.png"> 
 </p>
