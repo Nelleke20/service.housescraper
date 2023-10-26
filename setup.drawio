@@ -4,7 +4,7 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="20" value="&lt;font size=&quot;1&quot; style=&quot;&quot; color=&quot;#0d0d0d&quot;&gt;&lt;b style=&quot;&quot;&gt;Telegram bot&lt;/b&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#b0e3e6;strokeColor=#0e8088;sketch=1;curveFitting=1;jiggle=2;gradientColor=default;" parent="1" vertex="1">
+                <mxCell id="20" value="&lt;font size=&quot;1&quot; style=&quot;&quot; color=&quot;#0d0d0d&quot;&gt;&lt;b style=&quot;&quot;&gt;Telegram bot&lt;/b&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#b0e3e6;strokeColor=#0e8088;sketch=1;curveFitting=1;jiggle=2;gradientColor=none;" parent="1" vertex="1">
                     <mxGeometry x="600" y="269" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="22" value="Website" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fa6800;strokeColor=#C73500;sketch=1;curveFitting=1;jiggle=2;gradientDirection=south;swimlaneFillColor=none;fontColor=#000000;gradientColor=#EDEDED;startSize=23;fontSize=14;" parent="1" vertex="1">
@@ -34,7 +34,7 @@
                         <mxRectangle x="90" y="55" width="90" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="sVYA-P_zk5SEsgUEzxAb-45" value="&lt;font color=&quot;#030303&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;every minute on a Pi both scripts are ran and, if a difference is found to the original, an output is generated.&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E3DDD6;strokeColor=#666666;fontStyle=0;sketch=1;curveFitting=1;jiggle=2;gradientColor=#F5F5F5;fontSize=12;" parent="sVYA-P_zk5SEsgUEzxAb-44" vertex="1">
+                <mxCell id="sVYA-P_zk5SEsgUEzxAb-45" value="&lt;font color=&quot;#030303&quot; style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;every minute on a Pi both scripts are ran and, if a difference is found compared to the default, an output is generated.&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E3DDD6;strokeColor=#666666;fontStyle=0;sketch=1;curveFitting=1;jiggle=2;gradientColor=#F5F5F5;fontSize=12;" parent="sVYA-P_zk5SEsgUEzxAb-44" vertex="1">
                     <mxGeometry x="13" y="32" width="144" height="89" as="geometry"/>
                 </mxCell>
                 <mxCell id="sVYA-P_zk5SEsgUEzxAb-51" style="edgeStyle=none;html=1;strokeColor=#050505;strokeWidth=2;fontSize=10;fontColor=#5498F0;fillColor=#6d8764;sketch=1;curveFitting=1;jiggle=2;" parent="1" source="c-toH_A7TmxNrjQhJg11-42" target="25" edge="1">
