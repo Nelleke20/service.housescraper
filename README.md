@@ -4,20 +4,20 @@ For this project I used my Raspberry Pi and create a couple of cronjobs to const
 
 
 ##### Table of Contents  
-[Date](#Date)    
+[Date](#Starting-date)    
 [Context](#Context)      
 [Tech](#Tech-and-Tools)      
-[Start](#Start)     
+[Run](#Getting-started)     
 
 ---
 
-##### Start-of-the-
+##### Starting date
 Dec 27, 2021
 
 ##### Context
 nieuwbouwinhouten.nl was a website that posts updates about the Hofpark project. The plan of this project was to built houses in Houten-Zuid. It was a first come first serve project. So, whomever signed up for a specific phase first in line, also got the highest chances of getting a house. Phase 1 was already live and we signed up for it too late. Therefore, i decided to built a house scraper which would get me ready for phase 2. Sadly, phase 2 never went live, so I only got to test my product on phase 1 data... But still, that worked pretty nice  :wink:.
 
-<img src="img/horpark.png" width="400">
+<img src="img/hofpark.png" width="400">
 
 I created two functionalities based on the website.
 
