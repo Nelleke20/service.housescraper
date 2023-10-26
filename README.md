@@ -31,6 +31,7 @@ I ran this on my Pi with a cronjob every minute
 ##### Tech and Tools
 Raspberry Pi, cronjobs, sh files, webscraping (BeautifulSoup and Selenium), configparser, Telegram, black, flake8
 
+---
 
 ##### Getting started     
 1. create a venv and a screenshot folder
