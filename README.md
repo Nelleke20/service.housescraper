@@ -5,7 +5,7 @@ For this project I used my Raspberry Pi and created a couple of cronjobs to cons
 <!-- <img src="img/setup.png" width="600"> -->
 
 <p align="center" width="100%">
-    <img width="33%" src="img/setup.png"> 
+    <img width="100%" src="img/setup.png"> 
 </p>
 
 ##### Table of Contents  
