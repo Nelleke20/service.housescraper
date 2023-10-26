@@ -33,7 +33,7 @@ Raspberry Pi, cronjobs, sh files, webscraping (BeautifulSoup and Selenium), conf
 
 
 ##### Getting started     
-1. create: venv, screenshot folder
+1. create a venv and a screenshot folder
 2. create .secrets.yaml with:  
         [name]  
         emailadres: [emailadres]  
@@ -44,3 +44,4 @@ Raspberry Pi, cronjobs, sh files, webscraping (BeautifulSoup and Selenium), conf
         place: [place]  
         telegram_id: [telegram_id]
 3. run the sh-file for scraping news-pages (web_scraping.sh) and for checking phase 2 (web_fase_and_inlog_account.sh)  
+4. create a crontab based on your frequency whises
