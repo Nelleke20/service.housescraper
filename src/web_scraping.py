@@ -9,6 +9,7 @@ config.read('.secrets.yaml')
 
 
 def web_scraping_hofpark():
+
     # Download page and setup BeatifulSoup
     url = config['default']['url_2']
     getPage = requests.get(url)
@@ -51,6 +52,7 @@ def web_scraping_hofpark():
                                                                                                     resulttext))                        # noqa: E501
 
         else:
+            
             # if not, sent message with new information
             uitkomst_false = 'Yes, er is nieuws! Check the website voor het nieuws.'                                                    # noqa: E501
             artikel_false = 'Het laatste artikel bevat de volgende tekst: {}'.format(last_article)                                      # noqa: E501
