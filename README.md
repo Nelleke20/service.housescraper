@@ -19,20 +19,22 @@ nieuwbouwinhouten.nl was a website that posts updates about the Hofpark project.
 
 <img src="img/hofpark.png" width="400">
 
-I created two functionalities based on the website.
 
-(1) scrape the blog/news section and send a telegram message whenever a new post was added.
+I created two functionalities based on the website:
 
-(2) check if a new phase of the project was going live. If this was the case, automatically sign me up and send me a telegram message.
+(1) scrape the blog/news section and send a telegram message whenever a new post was added (web_scraping.sh)
+
+(2) check if a new phase of the project was going live. If this was the case, automatically sign me up and send me a telegram message (web_fase_and_inlog_account.sh)
+
+I ran this on my Pi with a cronjob every minute
 
 ##### Tech and Tools
 Raspberry Pi, cronjobs, sh files, webscraping (beautifulsoup and selenium), configfacace
 
 
 ##### Getting started     
-1. create venv (run requirements.txt)
-2. create screenshot folder (mkdir screenshot)
-3. create .secrets.yaml with:  
+1. create: venv, screenshot folder
+2. create .secrets.yaml with:  
         [name]  
         emailadres: [emailadres]  
         phone: [phone]  
@@ -41,4 +43,4 @@ Raspberry Pi, cronjobs, sh files, webscraping (beautifulsoup and selenium), conf
         streetname: [streetname]  
         place: [place]  
         telegram_id: [telegram_id]
-4. run the sh-file    
+3. run the sh-file for scraping news-pages (web_scraping.sh) and for checking phase 2 (web_fase_and_inlog_account.sh)  
