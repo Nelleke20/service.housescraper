@@ -2,10 +2,9 @@
 The goal of this project was to analyze the status of a new housing project that was initiated in Houten.
 For this project I used my Raspberry Pi and created a couple of cronjobs to constantly check the website and its information. 
 
-<!-- <img src="img/setup.png" width="600"> -->
-
+##### Overall setup of the project:
 <p align="center" width="100%">
-    <img width="80%" src="img/setup.png"> 
+    <img width="75%" src="img/setup.png"> 
 </p>
 
 ##### Table of Contents  
