@@ -1,4 +1,4 @@
 #! /bin/bash
-cd /home/pi/Documents/house-scraper-cron-job/
+cd /Users/nellekesmits/Documents/projects/cronjob.housescraper/
 source venv/bin/activate 
-venv/bin/python3.9 src/web_fase_and_inlog_account.py R,1
+venv/bin/python3 src/web_fase_and_inlog_account.py R,1

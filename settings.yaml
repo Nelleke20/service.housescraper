@@ -1,10 +1,7 @@
 [default]
 url_1: http://www.nieuwbouwinhouten.nl/woningen?status=InPreparation 
 fase_check: Hofpark fase 2
-user_1: nelleke
-user_2: elize
-user_3: jolien         
-user_4: jacqueline     
+user_1: nelleke   
 url_2: http://www.nieuwbouwinhouten.nl/nieuws
 old_article: <p class="u-body-normal">We hadden een strakke planning om eind 2021 met de eerste woningen op deze mooie plek in Houten in verkoop te gaan. Helaas moeten we de planning aanpassen. Lees snel onze toelichting voor deze keuze.</p>
 
@@ -12,22 +9,4 @@ old_article: <p class="u-body-normal">We hadden een strakke planning om eind 202
 housenumber1: 100
 housenumber2: 110
 username: Nelleke
-lastname: 
-
-[elize]
-housenumber1: 094
-housenumber2: 117
-username: Elize
-lastname: 
-
-[jolien]
-housenumber1: 116
-housenumber2: 112
-username: Jolien
-lastname: 
-
-[jacqueline]
-housenumber1: 095
-housenumber2: 113
-username: Jacqueline
-lastname: 
+lastname:
