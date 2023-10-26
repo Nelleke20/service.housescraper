@@ -32,18 +32,3 @@ I ran this on my Pi with a cronjob every minute
 
 #### Tech and Tools
 Raspberry Pi, cronjobs, sh files, webscraping (BeautifulSoup and Selenium), configparser, Telegram, black, flake8
-
-
-#### Getting started     
-1. create a venv and a screenshot folder
-2. create .secrets.yaml with:  
-        [name]  
-        emailadres: [emailadres]  
-        phone: [phone]  
-        postalcode: [postalcode]  
-        housnr: [housnr]  
-        streetname: [streetname]  
-        place: [place]  
-        telegram_id: [telegram_id]
-3. run the sh-file for scraping news-pages (web_scraping.sh) and for checking phase 2 (web_fase_and_inlog_account.sh)  
-4. create a crontab based on your frequency whises
