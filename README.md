@@ -3,7 +3,7 @@ The goal of this project was to analyze the status of a new housing project that
 For this project I used my Raspberry Pi and created a couple of cronjobs to constantly check the website and its information. 
 
 ##### Overall setup of the project:
-<p align="center" width="100%">
+<p align="center" width="200%">
     <img width="75%" src="img/setup.png"> 
 </p>
 
