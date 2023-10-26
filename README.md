@@ -7,14 +7,6 @@ For this project I used my Raspberry Pi and created a couple of cronjobs to cons
     <img width="75%" src="img/setup.png"> 
 </p>
 
-##### Table of Contents  
-[Date](#Starting-date)    
-[Context](#Context)      
-[Tech](#Tech-and-Tools)      
-[Run](#Getting-started)     
-
----
-
 ##### Starting date
 Dec 27, 2021
 
