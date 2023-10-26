@@ -1,6 +1,6 @@
 #### Introduction 
-The goal of this project was to analyze the status of a new housing project that was initiated in Houten in 2021.
-For this project I used my Raspberry Pi and create a couple of cronjobs to constantly check the website and its information. 
+The goal of this project was to analyze the status of a new housing project that was initiated in Houten.
+For this project I used my Raspberry Pi and created a couple of cronjobs to constantly check the website and its information. 
 
 
 ##### Table of Contents  
@@ -29,7 +29,7 @@ I created two functionalities based on the website:
 I ran this on my Pi with a cronjob every minute
 
 ##### Tech and Tools
-Raspberry Pi, cronjobs, sh files, webscraping (beautifulsoup and selenium), configfacace
+Raspberry Pi, cronjobs, sh files, webscraping (BeautifulSoup and Selenium), configparser, Telegram, black, flake8
 
 
 ##### Getting started     
