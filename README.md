@@ -23,11 +23,11 @@ nieuwbouwinhouten.nl was a website that posts updates about the Hofpark project.
 
 I created two functionalities based on the website:
 
-1. scrape the blog/news section and send a telegram message whenever a new post was added (web_scraping.sh)
+1. Scrape the blog/news section and send a telegram message whenever a new post was added (web_scraping.sh)
 
-2. check if a new phase of the project was going live. If this was the case, automatically sign me up and send me a telegram message (web_fase_and_inlog_account.sh)
+2. Check if a new phase of the project was going live. If this was the case, automatically sign me up and send me a telegram message (web_fase_and_inlog_account.sh)
 
-I ran this on my Pi with a cronjob every minute
+I ran this on my Pi with two cronjobs (every minute).
 
 
 #### Tech and Tools
