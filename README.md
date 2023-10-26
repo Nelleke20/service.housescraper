@@ -4,14 +4,14 @@ For this project I used my Raspberry Pi and create a couple of cronjobs to const
 
 
 ##### Table of Contents  
-[Date](#Start)    
+[Date](#Date)    
 [Context](#Context)      
-[Tech](#Tech and tools)      
-[Start](#Getting started)     
+[Tech](#Tech-and-Tools)      
+[Start](#Start)     
 
 ---
 
-##### Start of the project
+##### Start-of-the-
 Dec 27, 2021
 
 ##### Context
@@ -25,7 +25,7 @@ I created two functionalities based on the website.
 
 (2) check if a new phase of the project was going live. If this was the case, automatically sign me up and send me a telegram message.
 
-##### Tech and tools
+##### Tech and Tools
 Raspberry Pi, cronjobs, sh files, webscraping (beautifulsoup and selenium), configfacace
 
 
