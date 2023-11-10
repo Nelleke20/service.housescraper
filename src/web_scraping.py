@@ -64,6 +64,5 @@ def web_scraping_hofpark():
                                                                                                 config[user]['telegram_id'],            # noqa: E501
                                                                                                 resulttext))                            # noqa: E501
 
-
 if __name__ == "__main__":
     web_scraping_hofpark()
