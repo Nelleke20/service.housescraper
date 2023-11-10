@@ -1,12 +1,12 @@
-### Introduction 
+### Introduction
 The goal of this project was to analyze the status of a new housing project that was initiated in Houten.
-For this project I used my Raspberry Pi and created a couple of cronjobs to constantly checked the website. 
+For this project I used my Raspberry Pi and created a couple of cronjobs to constantly checked the website.
 
 
 #### Design / setup of the project:
 
 <p align="center" width="100%">
-    <img width="75%" src="img/setup.png"> 
+    <img width="75%" src="img/setup.png">
 </p>
 
 
@@ -19,7 +19,7 @@ www.nieuwbouwinhouten.nl is a website that posts updates about the Hofpark proje
 
 
 <p align="center" width="100%">
-    <img width="75%" src="img/hofpark.png"> 
+    <img width="75%" src="img/hofpark.png">
 </p>
 
 
