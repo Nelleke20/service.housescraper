@@ -1,184 +1,141 @@
-from bs4 import BeautifulSoup
-import requests
-import re
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
 import time
 from pathlib import Path
 import logging
 import configparser
+import utils
 
 
-def check_phase_status(config):
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    url = config['default']['url_1']
-    browser = webdriver.Chrome(ChromeDriverManager().install(),
-                               options=chrome_options)
-    browser.get(url) 
-    html = browser.page_source
-    woning_soup = BeautifulSoup(html, 'lxml')
-    fase_2 = woning_soup.find_all('span', attrs={
-                                  'class': 'property-card__project'})
-    output = []
-    [output.append(re.findall(r"\>(.*)\<", str(i), flags=0)) for i in fase_2]
-    output_flat = [item for sublist in output for item in sublist]                          # check all phases on the web           # noqa: E501
-    logging.info('The following phases are in the outputset: {}'.format(output_flat))                                               # noqa: E501
-    browser.quit()
-    return output_flat
-
-
-def sign_in_new_phase(config, phase_output, housenumbers,
-                      chatbot_id, chatbot_key):
-    logging.info('The following users are in the userset: {}'.format(usernames))                                                    # noqa: E501
-    logging.info('Running the applicationform sign-up script..')
-
+def sign_in_new_phase(
+    config, phase_output, housenumbers, chatbot_id, chatbot_key, user
+):
     # send output to telegram bot
     resulttext = []
     resulttext.append(set(phase_output))
-    resulttext.append('is also available in the totalset, check it out online. If not done yet, you will now be signed in.')        # noqa: E501
-    requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                                 # noqa: E501
-                                                                                        chatbot_key,                                # noqa: E501
-                                                                                        config[user]['telegram_id'],                # noqa: E501
-                                                                                        resulttext))                                # noqa: E501
+    resulttext.append(
+        """ is also available in the totalset, check it out online.
+                      If not done yet, you will now be signed in..."""
+    )
+    utils.request_sender(
+        chatbot_id, chatbot_key, config[user]["telegram_id"], resulttext
+    )
 
     # running script per new housenumber
     for housenumber in housenumbers:
-
-        # check if already signed in
-        screenshot_name = "./screenshot/{}_screenshot_signup{}.png".format(user, housenumber)                                       # noqa: E501
+        # if already signed in, stop the proces otherwise start
+        screenshot_name = (
+            "f./screenshot/{user}_screenshot_signup{housenumber}.png"  # noqa: E501
+        )
         screenshot_confirmation = Path(screenshot_name)
-        # if so, do not sign in to webpage
         if screenshot_confirmation.is_file():
-            logging.info('For the combination of {} and {}, a file already exists, so will skip this run.'.format(user,             # noqa: E501
-                                                                                                                  housenumber))     # noqa: E501
+            logging.info(
+                f"""For the combination of {user} and {housenumber},
+                         a file already exists, so will skip this run."""
+            )
             continue
-        # if not, sign in to webpage
         else:
-            # send starting info to telegram
-            output_combinatie = 'The following combination is filled out {}, {}'.format(user,                                       # noqa: E501
-                                                                                        housenumber)                                # noqa: E501
-            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                         # noqa: E501
-                                                                                                chatbot_key,                        # noqa: E501
-                                                                                                config[user]['telegram_id'],        # noqa: E501
-                                                                                                output_combinatie))                 # noqa: E501
+            output_combinatie = f"The following combination is filled out {user}, {housenumber}"  # noqa: E501
+            utils.request_sender(
+                chatbot_id,
+                chatbot_key,
+                config[user]["telegram_id"],
+                output_combinatie,  # noqa: E501
+            )
+
             # options for the chromedriver
-            chrome_options = Options()
-            chrome_options.add_argument("--window-size=1920,1080")
-            chrome_options.add_argument("--disable-extensions")
-            chrome_options.add_argument("--proxy-server='direct://'")
-            chrome_options.add_argument("--proxy-bypass-list=*")
-            chrome_options.add_argument("--start-maximized")
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--disable-gpu')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--ignore-certificate-errors')
-            url = "https://www.nieuwbouwinhouten.nl/woningen/tussenwoning-herenhuis-woningtype-a077R00001JFZFIQA5/bouwnummer-{}".format(housenumber)    # noqa: E501
+            chrome_options = utils.set_default_chrome_options()
+
+            # get browser
+            url = f"https://www.nieuwbouwinhouten.nl/woningen/tussenwoning-herenhuis-woningtype-a077R00001JFZFIQA5/bouwnummer-{housenumber}"  # noqa: E501
             browser = webdriver.Chrome(options=chrome_options)
             browser.get(url)
             browser.implicitly_wait(10)
 
             # accept cookies
-            python_button1 = browser.find_element(By.XPATH,
-                                                  '/html/body/bpd-cookies/div/div/div/div/button')                                  # noqa: E501
-            logging.info('Button 1 is clicked - accepting cookies for the combination {}, {}.'.format(user,                         # noqa: E501
-                                                                                                      housenumber))                 # noqa: E501
-            python_button1.click()
+            utils.cookie_accepter(browser)
+            time.sleep(1)
 
             # click on projectfase button
-            action = ActionChains(browser)
-            browser.execute_script("window.scrollTo(0, 750)")
-            time.sleep(3)
-            python_button2 = browser.find_element(By.XPATH,
-                                                  "/html/body/main/section[1]/div/div/div[1]/div[2]/div[1]/button")                 # noqa: E501
-            logging.info('Button 2 is clicked - click on the sign-up button for the combination {}, {}.'.format(user,               # noqa: E501
-                                                                                                                housenumber))       # noqa: E501
-            action.move_to_element(python_button2).click().perform()
+            action = utils.get_action(browser)
+            utils.find_project_website(browser, action, user, housenumber)
 
             # select and send keys from the  application form - first step
-            browser.find_element(By.ID, "lead-form-firstname").send_keys(
-                config[user]["username"])
-            browser.find_element(By.ID, "lead-form-lastname").send_keys(
-                config[user]["lastname"])
-            browser.find_element(By.ID, "lead-form-email").send_keys(
-                config[user]["emailadres"])
-            browser.find_element(By.ID, "lead-form-phone").send_keys(
-                config[user]["phone"])
-            browser.find_element(By.ID, "lead-form-postalcode").send_keys(
-                config[user]["postalcode"])
-            browser.find_element(By.ID, "lead-form-housenumber").send_keys(
-                config[user]["housnr"])
+            utils.find_elements_and_send_keys(browser, config, user)
             time.sleep(5)
 
             # select keys from the  application form - second step
-            streetname = browser.find_element(By.ID, "lead-form-streetname")
-            place = browser.find_element(By.ID, "lead-form-place")
+            streetname, place = utils.extract_relevant_elements(browser)
+            time.sleep(3)
 
             # send keys form the application form - second
-            time.sleep(3)
-            logging.info('Sending the keys in the sign-up form for the combination {}, {}.'.format(user,                            # noqa: E501
-                                                                                                   housenumber))                    # noqa: E501
-            streetname.send_keys(config[user]["streetname"])
-            place.send_keys(config[user]["place"])
-            screenshot_name = "./screenshot/{}_screenshot_signup{}.png".format(user,                                                # noqa: E501
-                                                                               housenumber)                                         # noqa: E501
-            browser.save_screenshot(screenshot_name)
+            utils.send_keys_for_application_form(
+                config, user, housenumber, place, streetname, browser
+            )
             time.sleep(5)
-            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                         # noqa: E501
-                                                                                                chatbot_key,                        # noqa: E501
-                                                                                                config[user]['telegram_id'],        # noqa: E501
-                                                                                                'Answers are sent.'))               # noqa: E501
+            answer = "Answers are sent."
+            utils.request_sender(
+                chatbot_id, chatbot_key, config[user]["telegram_id"], answer
+            )
+
             # send application form
-            python_button3 = browser.find_element(By.XPATH,
-                                                  "/html/body/lead-form/bpd-modal/div/div/bpd-pages/div[1]/bpd-form/form/div[1]/div[14]/button")                      # noqa: E501
-            logging.info('Button 3 is clicked - sending the applicationform for the combination {}, {}.'.format(user,               # noqa: E501
-                                                                                                                housenumber))       # noqa: E501
-            action.move_to_element(python_button3).click().perform()
+            utils.send_application_form(user, housenumber, browser, action)
             time.sleep(5)
-            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                         # noqa: E501
-                                                                                                chatbot_key,                        # noqa: E501
-                                                                                                config[user]['telegram_id'],        # noqa: E501
-                                                                                                'The applicationform is sent.'))    # noqa: E501
-            screenshot_confirmation = "./screenshot/{}_screenshot_confirmation{}.png".format(user,                                  # noqa: E501
-                                                                                             housenumber)                           # noqa: E501
+            application = "The applicationform is sent."
+            utils.request_sender(
+                chatbot_id,
+                chatbot_key,
+                config[user]["telegram_id"],
+                application,  # noqa: E501
+            )
+            screenshot_confirmation = (
+                f"./screenshot/{user}_screenshot_confirmation{housenumber}.png"
+            )
             browser.save_screenshot(screenshot_confirmation)
             browser.quit()
 
 
-if __name__ == "__main__":
-    config = configparser.ConfigParser()
-    config.read('settings.yaml')                # include input from settings
-    config.read('.secrets.yaml')                # include input from secrets
-    logging.basicConfig(level=logging.INFO)     # setup logging
-
+def check_phase_and_sing_up(config):
     # check if new phases are available
-    phase_output = check_phase_status(config)
-
-    # Define settings for running the sign-up script
-    usernames = [config['default']['user_1']]
-    chatbot_id = config['default']['chatbot_id']
-    chatbot_key = config['default']['chatbot_key']
-    chatbot_id2 = config['default']['chatbot_id2']
-    chatbot_key2 = config['default']['chatbot_key2']
-    phase_check = config['default']['fase_check']
+    phase_output = utils.check_phase_status(config)
+    usernames, chatbot_id, chatbot_key, phase_check = utils.extract_settings(
+        config
+    )  # noqa: E501
+    logging.info(
+        "The following users are in the userset: {}".format(usernames)
+    )  # noqa: E501
 
     # if new phase is availble sign-up for each user for different housenumbers
     if phase_check in set(phase_output):
-        
+        logging.info("Running the applicationform sign-up script..")
+
         # if so, sign in to new phase
         for user in usernames:
-            housenumbers = [config[user]["housenumber1"], config[user]["housenumber2"]]                                             # noqa: E501
-            sign_in_new_phase(config, phase_output, housenumbers,
-                              chatbot_id, chatbot_key)
+            housenumbers = [
+                config[user]["housenumber1"],
+                config[user]["housenumber2"],
+            ]  # noqa: E501
+            sign_in_new_phase(
+                config,
+                phase_output,
+                housenumbers,
+                chatbot_id,
+                chatbot_key,
+                usernames,  # noqa: E501
+            )
     else:
         # if not, send message to telegram bot
         resulttext = []
-        resulttext.append([set(phase_output), 'is only available in the set.'])
-        requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2,                            # noqa: E501
-                                                                                            chatbot_key2,                           # noqa: E501
-                                                                                            config['nelleke']['telegram_id'],       # noqa: E501
-                                                                                            resulttext))                            # noqa: E501
+        resulttext.append([set(phase_output), "is only available in the set."])
+        utils.request_sender(
+            chatbot_id, chatbot_key, config[user]["telegram_id"], resulttext
+        )
+
+
+if __name__ == "__main__":
+    config = configparser.ConfigParser()
+    config.read("settings.yaml")  # include input from settings
+    config.read(".secrets.yaml")  # include input from secrets
+    logging.basicConfig(level=logging.INFO)  # setup logging
+
+    # run script
+    check_phase_and_sing_up(config)
