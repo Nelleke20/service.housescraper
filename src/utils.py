@@ -35,10 +35,19 @@ def extract_settings(config):
     usernames = [config['default']['user_1']]
     chatbot_id = config['default']['chatbot_id']
     chatbot_key = config['default']['chatbot_key']
-    chatbot_id2 = config['default']['chatbot_id2']
-    chatbot_key2 = config['default']['chatbot_key2']
+    # chatbot_id2 = config['default']['chatbot_id2']
+    # chatbot_key2 = config['default']['chatbot_key2']
     phase_check = config['default']['fase_check']
-    return usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2, phase_check
+    return usernames, chatbot_id, chatbot_key, phase_check
+
+def default_request(chatbot_id, chatbot_key, user):
+    chat_id = user 
+    return f"https://api.telegram.org/{chatbot_id}:{chatbot_key}/sendMessage?chat_id={chat_id}"
+
+def request_sender(chatbot_id, chatbot_key, user, text):
+    default = default_request(chatbot_id, chatbot_key, user)
+    output = f"&text={text}"
+    requests.get(default + output)
 
 def cookie_accepter(browser, user, housenumber):
     python_button1 = browser.find_element(By.XPATH,

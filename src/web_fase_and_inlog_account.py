@@ -19,34 +19,29 @@ def sign_in_new_phase(config, phase_output, housenumbers,
     # send output to telegram bot
     resulttext = []
     resulttext.append(set(phase_output))
-    resulttext.append('is also available in the totalset, check it out online. If not done yet, you will now be signed in.')        # noqa: E501
-    requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                                 # noqa: E501
-                                                                                        chatbot_key,                                # noqa: E501
-                                                                                        config[user]['telegram_id'],                # noqa: E501
-                                                                                        resulttext))                                # noqa: E501
+    resulttext.append(""" is also available in the totalset, check it out online. 
+                      If not done yet, you will now be signed in...""")        
+    utils.request_sender(chatbot_id, chatbot_key, config[user]['telegram_id'], resulttext)
 
     # running script per new housenumber
     for housenumber in housenumbers:
 
         # if already signed in, stop the proces otherwise start
-        screenshot_name = "./screenshot/{}_screenshot_signup{}.png".format(user, housenumber)                                       # noqa: E501
+        screenshot_name = "f./screenshot/{user}_screenshot_signup{housenumber}.png"                               
         screenshot_confirmation = Path(screenshot_name)
         if screenshot_confirmation.is_file():           
-            logging.info('For the combination of {} and {}, a file already exists, so will skip this run.'.format(user,             # noqa: E501
-                                                                                                                  housenumber))     # noqa: E501
+            logging.info(f"""For the combination of {user} and {housenumber}, 
+                         a file already exists, so will skip this run.""")   
             continue
         else:                                           
-            output_combinatie = 'The following combination is filled out {}, {}'.format(user,                                       # noqa: E501
-                                                                                        housenumber)                                # noqa: E501
-            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                         # noqa: E501
-                                                                                                chatbot_key,                        # noqa: E501
-                                                                                                config[user]['telegram_id'],        # noqa: E501
-                                                                                                output_combinatie))                 # noqa: E501
+            output_combinatie = f'The following combination is filled out {user}, {housenumber}'
+            utils.request_sender(chatbot_id, chatbot_key, config[user]['telegram_id'], output_combinatie)
+
             # options for the chromedriver
             chrome_options = utils.set_default_chrome_options()
 
             # get browser
-            url = "https://www.nieuwbouwinhouten.nl/woningen/tussenwoning-herenhuis-woningtype-a077R00001JFZFIQA5/bouwnummer-{}".format(housenumber)    # noqa: E501
+            url = f"https://www.nieuwbouwinhouten.nl/woningen/tussenwoning-herenhuis-woningtype-a077R00001JFZFIQA5/bouwnummer-{housenumber}"   # noqa: E501
             browser = webdriver.Chrome(options=chrome_options)
             browser.get(url)
             browser.implicitly_wait(10)
@@ -70,19 +65,15 @@ def sign_in_new_phase(config, phase_output, housenumbers,
             # send keys form the application form - second
             utils.send_keys_for_application_form(config, user, housenumber, place, streetname, browser)
             time.sleep(5)
-            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                         # noqa: E501
-                                                                                                chatbot_key,                        # noqa: E501
-                                                                                                config[user]['telegram_id'],        # noqa: E501
-                                                                                                'Answers are sent.'))               # noqa: E501   
+            answer = 'Answers are sent.'
+            utils.request_sender(chatbot_id, chatbot_key, config[user]['telegram_id'], answer)
+
             # send application form
             utils.send_application_form(user, housenumber, browser, action)
             time.sleep(5)
-            requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id,                         # noqa: E501
-                                                                                                chatbot_key,                        # noqa: E501
-                                                                                                config[user]['telegram_id'],        # noqa: E501
-                                                                                                'The applicationform is sent.'))    # noqa: E501
-            screenshot_confirmation = "./screenshot/{}_screenshot_confirmation{}.png".format(user,                                  # noqa: E501
-                                                                                             housenumber)                           # noqa: E501
+            application = 'The applicationform is sent.'
+            utils.request_sender(chatbot_id, chatbot_key, config[user]['telegram_id'], application)
+            screenshot_confirmation = f"./screenshot/{user}_screenshot_confirmation{housenumber}.png"
             browser.save_screenshot(screenshot_confirmation)
             browser.quit()
 
@@ -91,8 +82,8 @@ def check_phase_and_sing_up(config):
 
     # check if new phases are available
     phase_output = utils.check_phase_status(config)
-    usernames, chatbot_id, chatbot_key, chatbot_id2, chatbot_key2, phase_check = utils.extract_settings(config)
-    logging.info('The following users are in the userset: {}'.format(usernames))                                                    # noqa: E501
+    usernames, chatbot_id, chatbot_key, phase_check = utils.extract_settings(config)
+    logging.info('The following users are in the userset: {}'.format(usernames))                                                 
 
    # if new phase is availble sign-up for each user for different housenumbers
     if phase_check in set(phase_output):    
@@ -100,17 +91,15 @@ def check_phase_and_sing_up(config):
 
         # if so, sign in to new phase
         for user in usernames:
-            housenumbers = [config[user]["housenumber1"], config[user]["housenumber2"]]                                             # noqa: E501
+            housenumbers = [config[user]["housenumber1"], config[user]["housenumber2"]]                                             
             sign_in_new_phase(config, phase_output, housenumbers,
                               chatbot_id, chatbot_key, usernames)        
     else:
         # if not, send message to telegram bot
         resulttext = []
         resulttext.append([set(phase_output), 'is only available in the set.'])
-        requests.get("https://api.telegram.org/{}:{}/sendMessage?chat_id={}&text={}".format(chatbot_id2,                            # noqa: E501
-                                                                                            chatbot_key2,                           # noqa: E501
-                                                                                            config['nelleke']['telegram_id'],       # noqa: E501
-                                                                                            resulttext))         
+        utils.request_sender(chatbot_id, chatbot_key, config[user]['telegram_id'], resulttext)
+
 
 if __name__ == "__main__":
     config = configparser.ConfigParser()
